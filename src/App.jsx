@@ -12,37 +12,43 @@ import "./App.scss";
 const apiKey = import.meta.env.VITE_API_KEY;
 
 function App() {
-    const [movies, setMovies] = useState([]);
-    const [movieSearch, setMovieSearch] = useState("spiderman");
+    const [content, setContent] = useState([]);
+    const [contentSearch, setContentSearch] = useState("spiderman");
+    const [fetchValue, setFetchValue] = useState("movie");
 
     useEffect(() => {
-        const fetchMovies = async () => {
+        const fetchContent = async () => {
             const response = await fetch(
-                `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieSearch}`
+                `https://api.themoviedb.org/3/search/${fetchValue}?api_key=${apiKey}&query=${contentSearch}`
             );
-            const objMovies = await response.json();
-
-            setMovies(objMovies.results);
+            const objContent = await response.json();
+            setContent(objContent.results);
         };
 
-        fetchMovies();
-    }, [movieSearch]);
+        fetchContent();
+    }, [contentSearch, fetchValue]);
 
-    const onSearch = async (inputValue, setValue) => {
-        setMovieSearch(inputValue);
+    console.log(content);
+    const onSearch = async (inputValue, setValue, setSelectSearch) => {
+        setContentSearch(inputValue);
+        setFetchValue(setSelectSearch);
         setValue("");
     };
-
+    console.log(`content` + content.overview);
     return (
         <>
             <SearchBar onSearch={onSearch} />
             <div className="movie-container">
-                {movies.map((movie) => (
+                {content.map((content) => (
                     <MovieCard
-                        key={movie.id}
-                        title={movie.title}
-                        poster={movie.poster_path}
-                        bio={movie.overview}
+                        key={content.id}
+                        title={
+                            fetchValue === "movie"
+                                ? content.title
+                                : content.name
+                        }
+                        poster={content.poster_path}
+                        bio={content.overview}
                     />
                 ))}
             </div>
