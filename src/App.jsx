@@ -48,7 +48,12 @@ function App() {
                                         ? contentItem.title
                                         : contentItem.name
                                 }
-                                poster={contentItem.poster_path}
+                                poster={
+                                    contentItem.poster_path === undefined ||
+                                    contentItem.poster_path === null
+                                        ? "https://www.feed-image-editor.com/sites/default/files/perm/wysiwyg/image_not_available.png"
+                                        : `https://image.tmdb.org/t/p/w500${contentItem.poster_path}`
+                                }
                                 bio={contentItem.overview}
                             />
                         ))}

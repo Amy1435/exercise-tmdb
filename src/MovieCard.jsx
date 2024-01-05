@@ -3,14 +3,7 @@ const MovieCard = ({ title, poster, bio }) => {
         <div className="card-container">
             <h1>{title}</h1>
             <figure>
-                <img
-                    src={
-                        poster === null
-                            ? "https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"
-                            : `https://image.tmdb.org/t/p/w500${poster}`
-                    }
-                    alt={`${title}`}
-                />
+                <img src={poster} />
             </figure>
             <div className="movie-info">
                 {bio ? (
